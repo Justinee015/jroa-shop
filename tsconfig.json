@@ -6,14 +6,16 @@
     // "outDir": "./dist",
     "outDir": "./dist",
     "rootDir": "./",
+
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "ESNext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "target": "es6",
-    "types": [],
+
     // For nodejs:
     // "lib": ["esnext"],
-    // "types": ["node"],
+    "types": ["node"],
     // and npm install -D @types/node
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -43,6 +45,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["**/*.ts"],
+  "include": ["src", "node_modules"],
   "exclude": ["dist"]
 }
