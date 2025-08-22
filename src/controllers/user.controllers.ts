@@ -33,15 +33,14 @@ export const createUser: RequestHandler = async (req, res, next) => {
 
 export const updateUser: RequestHandler = async (req, res, next) => {
   try {
-    const createdUser = await userService.updateUser(req);
-    res.status(201).json(createdUser);
+    const updatedUser = await userService.updateUser(req);
+    res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json({
       error: true,
-      message: ERROR_MESSAGE.ERR_DB_CREATE_USER,
+      message: ERROR_MESSAGE.ERR_DB_UPDATE_USER,
       status: 500,
     });
-
     next(error);
   }
 };
