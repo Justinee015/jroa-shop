@@ -1,30 +1,84 @@
-import type { RequestHandler } from "express";
+import type { UserType } from "#types/userModel.types.js";
+import type { NextFunction, Request, RequestHandler, Response } from "express";
 
 import userService from "#services/user.services.js";
 
-export const getUsers: RequestHandler = async (_, res, next) => {
+const getUsers: RequestHandler = async (
+  _,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const users = await userService.getAllUsers();
-    res.status(200).json(users);
+    res.status(200).json({ code: 200, error: false, result: users });
   } catch (error) {
     next(error);
   }
 };
 
-export const createUser: RequestHandler = async (req, res, next) => {
+const getSpecificUser: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const createdUser = await userService.createUser(req);
-    res.status(201).json(createdUser);
+    const id = req.params.id;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const specificUser = await userService.getSpecificUser(id!);
+    res.status(200).json({ code: 200, error: false, result: specificUser });
   } catch (error) {
     next(error);
   }
 };
 
-export const updateUser: RequestHandler = async (req, res, next) => {
+const createUser: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const updatedUser = await userService.updateUser(req);
-    res.status(200).json(updatedUser);
+    console.log("create user");
+    const createdUser = await userService.createUser(req.body as UserType);
+    res.status(201).json({ code: 201, error: false, result: createdUser });
   } catch (error) {
     next(error);
   }
 };
+
+const updateUser: RequestHandler = async (
+  req,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const request = { id: Number(req.params.id), ...req.body };
+    const updatedUser = await userService.updateUser(request as UserType);
+    res.status(200).json({ code: 200, error: false, result: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const archiveUser: RequestHandler = async (
+  req,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const request = { id: Number(req.params.id), ...req.body };
+    const updatedUser = await userService.archiveUser(request as UserType);
+    res.status(200).json({ code: 200, error: false, result: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const userController = {
+  archiveUser,
+  createUser,
+  getSpecificUser,
+  getUsers,
+  updateUser,
+};
+
+export default userController;

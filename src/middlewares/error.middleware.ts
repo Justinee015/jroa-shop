@@ -20,7 +20,6 @@ const handleError = (
 
   // Determine status code
   const statusCode: number = err.status ?? err.statusCode ?? 500;
-  console.log("errorsss");
   // Send error response
   res.status(statusCode).json({
     error: true,

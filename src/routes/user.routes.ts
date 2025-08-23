@@ -1,17 +1,29 @@
-import {
-  createUser,
-  getUsers,
-  updateUser,
-} from "#controllers/user.controllers.js";
+import userController from "#controllers/user.controllers.js";
 import validate from "#middlewares/validate.middleware.js";
 import createUserRequestModel from "#models/createUserRequest.model.js";
+import getSpecificUserRequestModel from "#models/getSpecificUserRequest.model.js";
 import updateUserRequestModel from "#models/updateUserRequest.model.js";
 import { Router } from "express";
 
 const router = Router();
 
-router.get("/", getUsers);
-router.post("/create", validate(createUserRequestModel), createUser);
-router.patch("/update", validate(updateUserRequestModel), updateUser);
+router.get("/", userController.getUsers);
+router.get(
+  "/:id",
+  validate.validateParams(getSpecificUserRequestModel),
+  userController.getSpecificUser
+);
+router.post(
+  "/create",
+  validate.validateBody(createUserRequestModel),
+  userController.createUser
+);
+router.patch(
+  "/update/:id",
+  validate.validateParams(updateUserRequestModel),
+  userController.updateUser
+);
+
+router.patch("/archive/:id", userController.archiveUser);
 
 export default router;

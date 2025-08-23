@@ -23,11 +23,6 @@ app.use(morgan("dev")); // for logging requests
 
 app.use("/api/users", userRoutes);
 
-// app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
-//   console.log(err);
-//   next();
-// });
-
 app.use((req, res) => {
   res
     .status(404)
