@@ -25,5 +25,6 @@ router.patch(
 );
 
 router.patch("/archive/:id", userController.archiveUser);
+router.delete("/delete/:id", userController.deletedUser);
 
 export default router;

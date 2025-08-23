@@ -40,18 +40,26 @@ const updateUser = async (user: UserType) => {
 };
 
 const archiveUser = async (user: UserType) => {
-  const updatedUser = await prisma.user.update({
+  const archivedUser = await prisma.user.update({
     data: {
       delFlg: "1",
     },
     where: { id: user.id },
   });
-  return updatedUser;
+  return archivedUser;
+};
+
+const deleteUser = async (id: string) => {
+  const deletedUser = await prisma.user.delete({
+    where: { id: Number(id) },
+  });
+  return deletedUser;
 };
 
 const userService = {
   archiveUser,
   createUser,
+  deleteUser,
   getAllUsers,
   getSpecificUser,
   updateUser,

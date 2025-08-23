@@ -73,9 +73,25 @@ const archiveUser: RequestHandler = async (
   }
 };
 
+const deletedUser: RequestHandler = async (
+  req,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const id = req.params.id!;
+    const deletedUser = await userService.deleteUser(id);
+    res.status(200).json({ code: 200, error: false, result: deletedUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const userController = {
   archiveUser,
   createUser,
+  deletedUser,
   getSpecificUser,
   getUsers,
   updateUser,
