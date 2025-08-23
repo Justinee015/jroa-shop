@@ -12,7 +12,7 @@ const validate =
       if (err instanceof ZodError) {
         return res
           .status(404)
-          .json({ error: true, message: "Invalid user request", status: 404 });
+          .json({ error: true, message: "Invalid user request", status: 400 });
       }
       console.log(err);
       next(err);

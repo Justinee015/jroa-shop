@@ -21,7 +21,7 @@ const createUser = async (req: Request) => {
 };
 
 const updateUser = async (req: Request) => {
-  const createdUser = await prisma.user.update({
+  const updatedUser = await prisma.user.update({
     data: {
       email: req.body.email,
       name: req.body.name,
@@ -30,7 +30,7 @@ const updateUser = async (req: Request) => {
     },
     where: { id: req.body.id },
   });
-  return createdUser;
+  return updatedUser;
 };
 
 const userService = {
